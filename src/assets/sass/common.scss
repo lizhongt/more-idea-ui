@@ -1,0 +1,268 @@
+@import './common_var.scss';
+
+// 字体比重
+$radius-list: (
+  '2': 2,
+  '4': 4,
+  '6': 6,
+  '8': 8,
+  '10': 10,
+  '999': 999
+);
+@each $name, $val in $radius-list {
+  .bd-radius-#{$name} {
+    border-radius: #{$val}px;
+  }
+}
+
+$radius-list: 2 4 6 8 10 12 14 16 18 20 100 999;
+@mixin radius-list {
+  @each $rd in $radius-list {
+    .bd-radius-#{$rd} {
+      border-radius: #{$rd}px;
+    }
+  }
+}
+@include radius-list;
+
+// 字体比重
+$bold-list: (
+  '100': 100,
+  '200': 200,
+  '300': 300,
+  '400': 400,
+  '500': 500,
+  '600': 600,
+  '700': 700,
+  '800': 800,
+  '900': 900
+);
+@each $name, $val in $bold-list {
+  .text-bold-#{$name} {
+    font-weight: $val;
+  }
+}
+
+// 常用颜色定义
+// 使用：m-c-xxxx  ex：m-c-default
+$color-list: (
+  'FFFFFF': $color-DEFAULT,
+  '111F2C': $color-MAIN,
+  '191F25': $color-THIRDMARY,
+  '0089ff': $color-PRIMARY
+);
+@each $name, $val in $color-list {
+  .c-#{$name} {
+    color: $val;
+  }
+  .bg-#{$name} {
+    background: $val;
+  }
+}
+
+$opcity-list: (
+  '80': 0.8,
+  '60': 0.6,
+  '56': 0.56,
+  '40': 0.4,
+  '32': 0.32,
+  '28': 0.28,
+  '24': 0.24,
+  '12': 0.12,
+  '0.08': 0.08
+);
+@each $name, $val in $opcity-list {
+  .c-111F2C-#{$name} {
+    color: rgba(17, 31, 44, $val);
+  }
+  .c-191F25-#{$name} {
+    color: rgba(17, 31, 44, $val);
+  }
+  .c-0089ff-#{$name} {
+    color: rgba(0, 137, 255, $val);
+  }
+}
+
+// 字体大小
+$font-min-list: 0 8 12 14 16 20 22;
+@mixin font-min-list {
+  @each $font in $font-min-list {
+    .font-#{$font} {
+      font-size: #{$font/2}px;
+      -webkit-transform: scale(#{$font/24});
+    }
+    [data-dpr='2'] .font-#{$font} {
+      font-size: #{$font}px;
+      -webkit-transform: scale(#{$font/24});
+    }
+
+    [data-dpr='3'] .font-#{$font} {
+      font-size: #{$font * 1.5}px;
+      -webkit-transform: scale(#{$font/24});
+    }
+  }
+}
+@include font-min-list;
+
+// 字体大小
+$font-list: 24 26 28 30 32 34 36 40 42 44 48 50 56 60 80 100 120 140;
+@mixin font-list {
+  @each $font in $font-list {
+    .font-#{$font} {
+      font-size: #{$font/2}px;
+    }
+    [data-dpr='2'] .font-#{$font} {
+      font-size: #{$font}px;
+    }
+
+    [data-dpr='3'] .font-#{$font} {
+      font-size: #{$font * 1.5}px;
+    }
+  }
+}
+@include font-list;
+
+// 外边距
+$mt-list: 2 4 5 6 8 10 12 14 15 16 20 24 30 36 40 45 50 60 80 100 120 200;
+$mr-list: 2 4 5 6 7 8 9 10 11 12 14 15 16 17 20 22 24 32;
+$mb-list: 2 4 8 9 10 12 15 16 18 20 24 32 34 35 36 40 80 120;
+$ml-list: 4 7 8 10 12 15 16 20 24;
+$m-0-list: 5 8 12 15 16 24;
+$m-list-0: 9 12 15 24;
+@mixin mt-list {
+  @each $mt in $mt-list {
+    .mt-#{$mt} {
+      margin-top: #{$mt}px;
+    }
+  }
+}
+@mixin mr-list {
+  @each $mr in $mr-list {
+    .mr-#{$mr} {
+      margin-right: #{$mr}px;
+    }
+  }
+}
+@mixin mb-list {
+  @each $mb in $mb-list {
+    .mb-#{$mb} {
+      margin-bottom: #{$mb}px;
+    }
+  }
+}
+@mixin ml-list {
+  @each $ml in $ml-list {
+    .ml-#{$ml} {
+      margin-left: #{$ml}px;
+    }
+  }
+}
+@mixin m-0-list {
+  @each $m-0 in $m-0-list {
+    .m-0-#{$m-0} {
+      margin-left: #{$m-0}px;
+      margin-right: #{$m-0}px;
+    }
+  }
+}
+@mixin m-list-0 {
+  @each $m-list in $m-list-0 {
+    .m-#{$m-list}-0 {
+      margin-top: #{$m-list}px;
+      margin-bottom: #{$m-list}px;
+    }
+  }
+}
+@include mt-list;
+@include mr-list;
+@include mb-list;
+@include ml-list;
+@include m-0-list;
+@include m-list-0;
+
+// 内边距
+$p-0-list: 2 4 5 8 10 12 15 16 24 32;
+$p-list-0: 3 4 5 6 7 8 9 10 12 14 15 16 20 32 40 44;
+$pt-list: 2 4 5 6 7 8 9 10 12 13 15 16 20 24 36 46;
+$pr-list: 4 5 6 8 10 12 14 15 16 20 50;
+$pb-list: 2 4 6 7 8 9 10 12 13 15 16 20 24 30 32 40 42 50 60 72 80 112;
+$pl-list: 4 6 8 9 10 12 15 16 17 19 20 22 23 24 32 44;
+@mixin p-0-list {
+  @each $p-0 in $p-0-list {
+    .p-0-#{$p-0} {
+      padding-left: #{$p-0}px;
+      padding-right: #{$p-0}px;
+    }
+  }
+}
+@mixin p-list-0 {
+  @each $p-list in $p-list-0 {
+    .p-#{$p-list}-0 {
+      padding-top: #{$p-list}px;
+      padding-bottom: #{$p-list}px;
+    }
+  }
+}
+@mixin pt-list {
+  @each $pt in $pt-list {
+    .pt-#{$pt} {
+      padding-top: #{$pt}px;
+    }
+  }
+}
+@mixin pr-list {
+  @each $pr in $pr-list {
+    .pr-#{$pr} {
+      padding-right: #{$pr}px;
+    }
+  }
+}
+@mixin pb-list {
+  @each $pb in $pb-list {
+    .pb-#{$pb} {
+      padding-bottom: #{$pb}px;
+    }
+  }
+}
+@mixin pl-list {
+  @each $pl in $pl-list {
+    .pl-#{$pl} {
+      padding-left: #{$pl}px;
+    }
+  }
+}
+@include p-0-list;
+@include p-list-0;
+@include pt-list;
+@include pr-list;
+@include pb-list;
+@include pl-list;
+
+$bt-list: (
+  'bt': 'border-top',
+  'br': 'border-right',
+  'bb': 'border-bottom',
+  'bl': 'border-left'
+);
+$bt-opacity: (
+  '': 0.04,
+  '-8': 0.08,
+  '-12': 0.12,
+  '-24': 0.24
+);
+@mixin bt-list {
+  @each $name, $val in $bt-list {
+    @each $opname, $opval in $bt-opacity {
+      .#{$name}#{$opname} {
+        #{$val}: 1px solid rgba(25, 31, 37, $opval);
+      }
+      [data-dpr='2'] .#{$name} {
+        #{$val}: 2px solid rgba(25, 31, 37, $opval);
+      }
+      [data-dpr='3'] .#{$name} {
+        #{$val}: 3px solid rgba(25, 31, 37, $opval);
+      }
+    }
+  }
+}
+@include bt-list;
