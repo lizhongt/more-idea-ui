@@ -27,7 +27,7 @@ module.exports = {
   publicPath: './',
 
   // 输出文件目录
-  outputDir: 'lib',
+  outputDir: buildEnv === 'doc' ? 'dist' : 'lib',
 
   // 静态资源目录
   assetsDir: 'static',
@@ -39,7 +39,7 @@ module.exports = {
         buildEnv === 'doc' ? 'examples/main.js' : 'src/components/index.js',
       template: 'public/index.html',
       filename: 'index.html',
-      title: 'fly-ui'
+      title: 'md-ui'
     }
   },
 
@@ -76,7 +76,7 @@ module.exports = {
       config.output
         .path(path.resolve(process.cwd(), './lib'))
         .filename('[name]/index.js')
-        .library('fly-ui')
+        .library('more-idea-ui')
         .libraryTarget('commonjs2')
         .libraryExport('default')
 
@@ -118,14 +118,14 @@ module.exports = {
     // css预设器配置项
     loaderOptions: {
       scss: {
-        additionalData: `@import "~/assets/sass/common_var.scss";`
+        additionalData: `@import "~/assets/sass/theme.scss";@import "~/assets/sass/icon.scss";`
       },
       css: {
         // 注意：以下配置在 Vue CLI v4 与 v3 之间存在差异。
         // Vue CLI v3 用户可参考 css-loader v1 文档
         // https://github.com/webpack-contrib/css-loader/tree/v1.0.1
         modules: {
-          getLocalIdent: (context, localIdentName, localName, options) => {
+          getLocalIdent: (context, localIdentName, localName) => {
             return `${localName}`
           }
         },

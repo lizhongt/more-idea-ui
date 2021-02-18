@@ -1,28 +1,32 @@
 <template>
-  <div class="fly-switch fb fb-cross-center">
+  <div
+    class="md-switch fb fb-cross-center"
+    :class="{ 'fb-main-between': label }"
+  >
+    <span v-if="label" class="md-switch-label">{{ label }}</span>
     <div
-      class="fly-switch-wrap fb fb-cross-center"
+      class="md-switch-wrap fb fb-cross-center"
       :class="{
-        'fly-switch-on': checkboxValue,
-        'fly-switch-disabled': disabled
+        'md-switch-on': checkboxValue,
+        'md-switch-disabled': disabled
       }"
       :style="computedStyles"
     >
       <input
-        class="fly-switch-input"
+        class="md-switch-input"
         type="checkbox"
         v-model="checkboxValue"
         :disabled="disabled"
       />
-      <i class="fly-switch-face"></i>
+      <i class="md-switch-face"></i>
     </div>
-    <span class="fly-switch-label"><slot></slot></span>
+    <span v-if="!label" class="md-switch-label"><slot></slot></span>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'fly-switch',
+  name: 'MdSwitch',
   components: {},
   props: {
     value: {
@@ -32,6 +36,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    label: {
+      type: String,
+      default: ''
     },
     activeColor: {
       type: String,
@@ -84,8 +92,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fly-switch {
-  .fly-switch-wrap {
+.md-switch {
+  padding: 0 16px;
+  width: 100%;
+  &.fb-main-between {
+    .md-switch-label {
+      margin-left: 0;
+    }
+  }
+  .md-switch-wrap {
     position: relative;
     display: inline-block;
     width: 52px;
@@ -94,17 +109,17 @@ export default {
     border: 1px solid #e4e4e4;
     border-radius: 28px;
     background-color: #e4e4e4;
-    .fly-switch-input {
+    .md-switch-input {
       position: absolute;
       z-index: 99;
       width: 52px;
       height: 30px;
       opacity: 0;
     }
-    .fly-switch-face {
+    .md-switch-face {
       position: absolute;
       top: 0;
-      left: 0;
+      left: 1px;
       z-index: 1;
       width: 28px;
       height: 28px;
@@ -117,15 +132,16 @@ export default {
       transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1.28),
         -webkit-transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1.28);
     }
-    &.fly-switch-on {
-      background-color: $color-PRIMARY;
-      .fly-switch-face {
+    &.md-switch-on {
+      @include background('PRIMARY');
+      .md-switch-face {
+        left: -2px;
         transform: translateX(24px);
       }
     }
   }
 
-  .fly-switch-label {
+  .md-switch-label {
     display: block;
     margin-left: 12px;
   }

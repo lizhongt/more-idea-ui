@@ -19,7 +19,7 @@ module.exports = {
       entry: 'src/examples/main.js',
       template: 'public/index.html',
       filename: 'index.html',
-      title: 'fly-ui demo'
+      title: 'md-ui demo'
     }
   },
 

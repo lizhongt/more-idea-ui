@@ -1,8 +1,8 @@
-import SearchBar from './src/main'
+import Searchbar from './src/main'
 
 /* istanbul ignore next */
-SearchBar.install = function(Vue) {
-  Vue.component(SearchBar.name, SearchBar)
+Searchbar.install = function(Vue) {
+  Vue.component(Searchbar.name, Searchbar)
 }
 
-export default SearchBar
+export default Searchbar

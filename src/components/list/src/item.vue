@@ -1,28 +1,32 @@
 <template>
   <li
-    class="fly-list-item"
+    class="md-list-item"
     :class="{
       'two-line': rootList.textline === 2,
       'three-line': rootList.textline === 3,
       'has-avator': avator
     }"
+    @click="clickHanlder"
   >
-    <div class="item-wrapper fb fb-cross-center">
+    <div
+      class="item-wrapper fb fb-cross-center"
+      :class="{ 'md-justify': $slots.default }"
+    >
       <!-- 支持整个slot传入 -->
       <slot>
         <slot class="a" name="avator"></slot>
-        <div class="fly-list-item-content item-flex-1">
-          <div class="fly-list-item-title">
+        <div class="md-list-item-content item-flex-1">
+          <div class="md-list-item-title">
             <slot name="title">{{ title }}</slot>
           </div>
-          <div class="fly-list-item-subtitle" v-if="rootList.textline > 1">
+          <div class="md-list-item-subtitle" v-if="rootList.textline > 1">
             <slot name="subtitle">{{ subTitle }}</slot>
           </div>
-          <div class="fly-list-item-thirdtitle" v-if="rootList.textline === 3">
+          <div class="md-list-item-thirdtitle" v-if="rootList.textline === 3">
             <slot name="thirdtitle">{{ thirdTitle }}</slot>
           </div>
         </div>
-        <div class="fly-list-item-ft" v-if="rootList.arrow">
+        <div class="md-list-item-ft" v-if="rootList.arrow">
           <slot name="more"></slot>
         </div>
       </slot>
@@ -32,7 +36,7 @@
 
 <script>
 export default {
-  name: 'FlyListItem',
+  name: 'MdListItem',
   components: {},
   inject: ['rootList'],
   props: {
@@ -72,59 +76,64 @@ export default {
   deactivated() {},
   beforeDestroy() {},
   destroyed() {},
-  methods: {}
+  methods: {
+    clickHanlder() {
+      this.$emit('click')
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 @import '~/assets/sass/flex.scss';
 @import '~/assets/sass/icon.scss';
-.fly-list-item {
+@import '~/assets/sass/theme.scss';
+.md-list-item {
   display: block;
   &:active {
-    background-color: rgba($color-MAIN, 0.04);
+    @include background('MAIN', 0.04);
   }
   &:first-child {
-    .item-wrapper:before {
+    > .item-wrapper:before {
       display: none;
     }
   }
-  .item-wrapper {
-    height: 56px;
+  > .item-wrapper {
+    min-height: 56px;
     padding: 0 16px;
     position: relative;
+    &.md-justify {
+      padding: 0px;
+    }
+    .md-list-item-content {
+      text-align: left;
+    }
     &::before {
       content: ' ';
       position: absolute;
-      left: 0;
+      left: 16px;
       top: 0;
       right: 0;
-      height: 1px;
-      border-top: 1px solid rgba(0, 0, 0, 0.1);
-      color: rgba(0, 0, 0, 0.1);
-      color: var(--weui-FG-3);
+      height: 2px;
+      @include background('THIRDMARY', 0.08);
       -webkit-transform-origin: 0 0;
       transform-origin: 0 0;
       -webkit-transform: scaleY(0.5);
       transform: scaleY(0.5);
-      left: 16px;
       z-index: 2;
     }
-    .fly-list-item-content {
-      // border-bottom: 1px solid $color-BORDER;
-    }
-    .fly-list-item-title {
+    .md-list-item-title {
       line-height: 24px;
       height: 24px;
       font-size: 17px;
-      color: $color-MAIN;
+      @include color('MAIN');
     }
-    .fly-list-item-subtitle,
-    .fly-list-item-thirdtitle {
+    .md-list-item-subtitle,
+    .md-list-item-thirdtitle {
       line-height: 20px;
       height: 20px;
       font-size: 14px;
-      color: rgba($color-MAIN, 0.4);
+      @include color('MAIN', 0.4);
     }
     .avator {
       min-width: 48px;
@@ -133,28 +142,28 @@ export default {
       }
     }
     .arrow {
-      color: rgba($color-MAIN, 0.4);
+      @include color('MAIN', 0.4);
     }
   }
   &.two-line {
     .item-wrapper {
-      height: 68px;
+      min-height: 68px;
     }
   }
   &.three-line {
     .item-wrapper {
-      height: 88px;
+      min-height: 88px;
     }
   }
   &.has-avator {
     .item-wrapper {
-      height: 64px;
+      min-height: 64px;
       &::before {
         left: 62px;
       }
     }
   }
-  .fly-list-item-ft {
+  .md-list-item-ft {
     padding-right: 20px;
     position: relative;
     &:after {

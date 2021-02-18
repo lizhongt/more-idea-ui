@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: 'fly-swiper-item',
+  name: 'MdSwiperItem',
   components: {},
   props: {},
   data() {
@@ -29,8 +29,8 @@ export default {
 
 <style lang="scss" scoped>
 .swipe-item {
-  float: left;
   width: 100%;
   position: relative;
+  cursor: grab;
 }
 </style>

@@ -1,35 +1,41 @@
 <template>
   <transition name="fade">
-    <div class="action-sheet-wrapper" v-show="open" @click="handlerToCancel">
+    <popup
+      v-show="isVisible"
+      @mask-click="handlerToCancel"
+      :mask-closable="true"
+    >
       <div class="sheet-container">
-        <div class="sheet-body">
-          <div class="sheet-list fb fb-col fb-main-center">
-            <div class="sheet-title item-flex-1">{{ title }}</div>
-            <div class="sheet-items">
-              <div
-                v-for="(item, index) in actions"
-                :key="`sheet-item-${index}`"
-                class="sheet-item"
-                @click.stop="handlerToChoose(item, index)"
-                >{{ item.name }}</div
-              ></div
-            >
-          </div>
-          <slot name="button">
-            <div class="button-con" @click.stop="handlerToCancel">
-              {{ cancelText }}
-            </div>
-          </slot>
+        <div class="sheet-list fb fb-col fb-main-center">
+          <div class="sheet-title item-flex-1">{{ title }}</div>
+          <div class="sheet-items">
+            <div
+              v-for="(item, index) in actions"
+              :key="`sheet-item-${index}`"
+              class="sheet-item"
+              :class="{ active: active === index }"
+              @click.stop="handlerToChoose(item, index)"
+              >{{ item.name }}</div
+            ></div
+          >
         </div>
+        <slot name="button">
+          <div class="button-con" @click="handlerToCancel">
+            {{ cancelText }}
+          </div>
+        </slot>
       </div>
-    </div>
+    </popup>
   </transition>
 </template>
 
 <script>
+import Popup from '../../popup'
+import visibleMixin from '~/mixins/visible'
 export default {
-  name: '',
-  components: {},
+  name: 'MdActionSheet',
+  components: { Popup },
+  mixins: [visibleMixin],
   props: {
     actions: {
       type: Array,
@@ -37,9 +43,9 @@ export default {
         return []
       }
     },
-    open: {
-      type: Boolean,
-      default: true
+    active: {
+      type: [String, Number],
+      default: -1
     },
     title: {
       type: String,
@@ -67,9 +73,11 @@ export default {
   destroyed() {},
   methods: {
     handlerToCancel() {
-      this.$emit('cancel', !this.open)
+      this.isVisible = false
+      this.$emit('cancel', this.isVisible)
     },
     handlerToChoose(item, index) {
+      this.isVisible = false
       this.$emit('choose', item, index)
     }
   }
@@ -78,61 +86,56 @@ export default {
 
 <style lang="scss" scoped>
 @import '~/assets/sass/flex.scss';
-.action-sheet-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: rgba(25, 31, 37, 0.28);
-  z-index: 1;
-  .sheet-container {
-    position: relative;
-    height: 100%;
-  }
-  .sheet-body {
+.sheet-container {
+  text-align: center;
+  .sheet-list {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: center;
+    margin-bottom: 8px;
     width: 100%;
-    position: absolute;
-    bottom: 0px;
-    .sheet-list {
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-      text-align: center;
-      background: #ffffff;
-      margin-bottom: 8px;
-    }
-    .sheet-items {
-      max-height: 400px;
-      overflow-y: scroll;
-      .sheet-item {
-        height: 56px;
-        line-height: 56px;
-        color: $color-THIRDMARY;
-        font-size: 17px;
-        border-bottom: $color-BORDER;
-        padding: 0 16px text;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        &:last-child {
-          border-bottom: none;
-        }
-      }
-    }
-    .sheet-title {
+    background: #ffffff;
+  }
+  .sheet-items {
+    max-height: 400px;
+    overflow-y: scroll;
+    .sheet-item {
       height: 56px;
       line-height: 56px;
-      color: rgba($color-THIRDMARY, 0.56);
-      font-size: 14px;
-      border-bottom: $color-BORDER;
+      @include color('THIRDMARY');
+      font-size: 17px;
+      padding: 0 16px text;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      border-style: solid;
+      border-width: 0 0px 1px 0;
+      @include border(0.04);
+      &:last-child {
+        border-bottom: none;
+      }
+      &:active {
+        @include background('MAIN', 0.4);
+      }
+      &.active {
+        @include color();
+      }
     }
+  }
+  .sheet-title {
+    height: 56px;
+    line-height: 56px;
+    @include color('THIRDMARY', 0.56);
+    font-size: 14px;
+    border-style: solid;
+    border-width: 0 0px 1px 0;
+    @include border(0.04);
   }
   .button-con {
     background: #ffffff;
     height: 56px;
     line-height: 56px;
-    color: $color-THIRDMARY;
+    @include color('THIRDMARY');
     text-align: center;
     font-size: 17px;
     font-weight: 400;

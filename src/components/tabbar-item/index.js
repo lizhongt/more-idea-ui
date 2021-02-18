@@ -1,8 +1,8 @@
-import TabBarItem from '../tabbar/src/item'
+import TabbarItem from '../tabbar/src/item'
 
 /* istanbul ignore next */
-TabBarItem.install = function(Vue) {
-  Vue.component(TabBarItem.name, TabBarItem)
+TabbarItem.install = function(Vue) {
+  Vue.component(TabbarItem.name, TabbarItem)
 }
 
-export default TabBarItem
+export default TabbarItem

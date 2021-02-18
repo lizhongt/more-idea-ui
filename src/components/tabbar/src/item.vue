@@ -1,8 +1,8 @@
 <template>
   <div
-    class="fly-tab font-30 text-bold-400"
+    class="md-tab"
     :class="{
-      'fly-tab-active': name === rootTab.activeValue
+      'md-tab-active': name === rootTab.activeValue
     }"
     v-color="{
       type: 0,
@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: 'FlyTabBarItem',
+  name: 'MdTabbarItem',
   components: {},
   directives: {
     color: {
@@ -100,7 +100,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fly-tab {
+.md-tab {
   background: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -113,12 +113,14 @@ export default {
   line-height: normal;
   -webkit-transition: all 0.45s cubic-bezier(0.445, 0.05, 0.55, 0.95);
   transition: all 0.45s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-  color: rgba($color-MAIN, 0.56);
+  @include color('MAIN', 0.56);
   text-align: center;
   flex: 1;
   padding: 14px 6px;
-  &.fly-tab-active {
-    color: rgba($color-MAIN, 1);
+  font-size: 15px;
+  font-weight: 400;
+  &.md-tab-active {
+    @include color('MAIN');
   }
 }
 </style>

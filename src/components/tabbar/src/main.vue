@@ -1,5 +1,5 @@
 <template>
-  <div class="fly-tabbar" :class="{ 'unfixed-tabbar': !fixed }">
+  <div class="md-tabbar" :class="{ 'unfixed-tabbar': !fixed }">
     <div
       class="tabbar-wrapper"
       :class="fixed && 'fb fb-cross-center fb-main-center'"
@@ -8,7 +8,7 @@
       <slot></slot>
       <div
         v-show="highlightWidth"
-        class="fly-tab-link-highlight"
+        class="md-tab-link-highlight"
         :style="{
           width: `${highlightWidth}px`,
           transform: `translate3d(${translateX}px, 0px, 0px)`
@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: 'FlyTabBar',
+  name: 'MdTabbar',
   components: {},
   directives: {
     color: {},
@@ -104,10 +104,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '~/assets/sass/flex.scss';
-.fly-tabbar {
+.md-tabbar {
   overflow: hidden;
   padding: 0 16px;
-  background: $color-DEFAULT;
+  @include background('DEFAULT');
   .tabbar-wrapper {
     position: relative;
     overflow: hidden;
@@ -120,7 +120,7 @@ export default {
   &.unfixed-tabbar {
     box-sizing: content-box !important;
     white-space: nowrap;
-    .fly-tab {
+    .md-tab {
       flex: none;
       box-sizing: content-box !important;
       width: 62px;
@@ -128,7 +128,7 @@ export default {
       display: inline-block;
     }
   }
-  .fly-tab-link-highlight {
+  .md-tab-link-highlight {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -141,7 +141,7 @@ export default {
       position: relative;
       .hight-block {
         width: 24px;
-        background-color: $color-PRIMARY;
+        @include background('PRIMARY');
         height: 3px;
         display: inline-block;
       }

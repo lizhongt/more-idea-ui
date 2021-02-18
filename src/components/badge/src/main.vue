@@ -1,8 +1,8 @@
 <template>
-  <div class="fly-badge-container">
+  <div class="md-badge-container">
     <em
-      class="fly-badge fb fb-cross-center fb-main-center"
-      :class="[circle && 'fly-badge-circle', color && `fly-${color}-color`]"
+      class="md-badge fb fb-cross-center fb-main-center"
+      :class="[circle && 'md-badge-circle', color && `md-${color}-color`]"
       :style="getStyles()"
     >
       <slot name="content">{{ content }}</slot>
@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'FlyBadge',
+  name: 'MdBadge',
   components: {},
   props: {
     content: {
@@ -63,18 +63,18 @@ export default {
 
 <style lang="scss" scoped>
 @import '~/assets/sass/flex.scss';
-.fly-badge-container {
+.md-badge-container {
   position: relative;
   display: inline-block;
-  .fly-badge {
+  .md-badge {
     font-size: 12px;
-    color: $color-DEFAULT;
+    @include color('DEFAULT');
     padding: 0 6px;
     line-height: 1.5;
     font-style: normal;
     border-radius: 8px;
     overflow: hidden;
-    &.fly-badge-circle {
+    &.md-badge-circle {
       border-radius: 50%;
       padding: 0;
       width: 18px;
@@ -82,17 +82,17 @@ export default {
       overflow: hidden;
     }
   }
-  .fly-submary-color {
-    background-color: $color-SUBMARY;
+  .md-submary-color {
+    @include background('SUBMARY');
   }
-  .fly-primary-color {
-    background-color: $color-PRIMARY;
+  .md-primary-color {
+    @include background();
   }
-  .fly-warning-color {
-    background-color: $color-WARNNING;
+  .md-warning-color {
+    @include background('WARNNING');
   }
-  .fly-transparent-color {
-    background: rgba($color-DEFAULT, 0);
+  .md-transparent-color {
+    @include background('DEFAULT', 0);
   }
 }
 </style>

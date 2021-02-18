@@ -34,7 +34,7 @@ module.exports = {
       entry: 'src/components/index.js',
       template: 'public/index.html',
       filename: 'index.html',
-      title: 'fly-ui components'
+      title: 'md-ui components'
     }
   },
   configureWebpack: {
@@ -48,7 +48,7 @@ module.exports = {
       // 配置为commonjs2，入口文件的返回值将分配给module.exports对象，使其组件库在webpack构建的环境下使用
       libraryTarget: 'commonjs2',
       libraryExport: 'default',
-      library: 'fly-ui'
+      library: 'md-ui'
     }
   },
   // css相关配置

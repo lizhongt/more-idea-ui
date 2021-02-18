@@ -1,8 +1,8 @@
-import TabBar from './src/main'
+import Tabbar from './src/main'
 
 /* istanbul ignore next */
-TabBar.install = function(Vue) {
-  Vue.component(TabBar.name, TabBar)
+Tabbar.install = function(Vue) {
+  Vue.component(Tabbar.name, Tabbar)
 }
 
-export default TabBar
+export default Tabbar

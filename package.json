@@ -1,17 +1,20 @@
 {
-  "name": "fly-ui",
-  "version": "1.0.1",
+  "author": "leeztoy",
+  "name": "more-idea-ui",
+  "version": "1.0.3",
   "private": false,
   "files": [
-    "components",
-    "dist"
+    "examples",
+    "dist",
+    "lib",
+    "src"
   ],
-  "main": "dist/index.js",
-  "style": "dist/index.css",
+  "main": "lib/index.js",
+  "style": "lib/index.css",
   "scripts": {
     "serve": "set BUILD=doc&& vue-cli-service serve",
-    "build:doc": "set BUILD=doc&& vue-cli-service build && scp -r dist/* h5@192.168.4.80:/home/h5/webroot/fly-ui",
-    "build:pub": "set BUILD=pub&& vue-cli-service build",
+    "document": "set BUILD=doc&& vue-cli-service build && scp -r dist/*  h5@192.168.4.61:/home/h5/webroot/mdComponent/h5",
+    "publish": "set BUILD=pub&& vue-cli-service build",
     "lint": "vue-cli-service lint --target lib --name index --dest lib src/components/index.js",
     "prettier": "prettier --config ./.prettierrc --write 'src/**/*.ts' 'src/**/*.vue' 'src/**/*.js' "
   },
@@ -21,9 +24,11 @@
     "swipe-js-iso": "^2.1.5",
     "v-click-outside": "^3.1.2",
     "vue": "^2.6.11",
+    "vue-create-api": "^0.2.3",
     "vue-router": "^3.2.0"
   },
   "devDependencies": {
+    "@better-scroll/core": "^2.0.5",
     "@vue/cli-plugin-babel": "^4.5.0",
     "@vue/cli-plugin-eslint": "^4.5.0",
     "@vue/cli-service": "^4.5.0",

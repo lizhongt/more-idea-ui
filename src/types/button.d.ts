@@ -1,4 +1,12 @@
-import { FlyUIBaseComponent, FlyUIComponentSize } from './base'
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: lizt
+ * @Date: 2020-11-02 09:54:44
+ * @LastEditors: lizt
+ * @LastEditTime: 2021-01-19 15:21:01
+ */
+import { MdUIBaseComponent, MdUIComponentSize } from './base'
 
 /** Button type */
 export type ButtonType =
@@ -10,9 +18,9 @@ export type ButtonType =
   | 'text'
 
 /** Button Component */
-export declare class ElButton extends FlyUIBaseComponent {
+export interface MdButton extends MdUIBaseComponent {
   /** Button size */
-  size: FlyUIComponentSize
+  size: MdUIComponentSize
 
   /** Button type */
   type: ButtonType
@@ -32,3 +40,5 @@ export declare class ElButton extends FlyUIBaseComponent {
   /** Button icon, accepts an icon name of Element icon component */
   icon: string
 }
+
+export const MdButton: MdButton

@@ -1,6 +1,6 @@
 <template>
-  <div class="fly-radio-container" :class="computedContanierClass">
-    <label class="fly-radio-wrap fb fb-cross-center" :class="computedWrapClass">
+  <div class="md-radio-container" :class="computedContanierClass">
+    <label class="md-radio-wrap fb fb-cross-center" :class="computedWrapClass">
       <input
         type="radio"
         :disabled="disabled"
@@ -8,8 +8,8 @@
         :value="name"
       />
       <span
-        class="fly-radio-icon"
-        :class="{ 'fly-no-default': computedIconSlot }"
+        class="md-radio-icon"
+        :class="{ 'md-no-default': computedIconSlot }"
       >
         <slot name="icon"
           ><i class="iconfont default-icon" :style="computedStyles"
@@ -18,7 +18,7 @@
         >
       </span>
       <slot
-        ><span class="fly-radio-label" v-if="label">{{ label }} </span></slot
+        ><span class="md-radio-label" v-if="label">{{ label }} </span></slot
       >
     </label>
   </div>
@@ -26,7 +26,7 @@
 
 <script>
 export default {
-  name: 'FlyRadio',
+  name: 'MdRadio',
   components: {},
   inject: ['radioGroup'],
   props: {
@@ -56,26 +56,27 @@ export default {
   },
   data() {
     return {
-      checkValue: this.name
+      checkValue: this.radioGroup.value
     }
   },
   computed: {
     computedContanierClass() {
       return [
-        this.position === 'left' ? `fly-radio-${this.position}` : '',
-        this.circle ? 'fly-radio-circle' : '',
-        this.radioGroup.horizontal ? 'fly-horizental' : ''
+        this.position === 'left' ? `md-radio-${this.position}` : '',
+        this.circle ? 'md-radio-circle' : '',
+        this.radioGroup.horizontal ? 'md-horizental' : ''
       ]
     },
     computedWrapClass() {
       return {
-        'fly-checked': this.checkValue === this.name,
-        'fb-main-between': this.position !== 'follow',
-        'fly-disabled': this.disabled
+        'md-checked': this.checkValue === this.name,
+        'fb-main-between': this.position === 'right',
+        'fb-main-end': this.position === 'left',
+        'md-disabled': this.disabled
       }
     },
     computedStyles() {
-      if (this.color && this.checkValue) {
+      if (this.color && this.name === this.radioGroup.value) {
         return {
           color: this.color
         }
@@ -127,16 +128,25 @@ export default {
 
 <style lang="scss" scoped>
 @import '~/assets/sass/flex.scss';
-.fly-radio-container {
+.md-radio-container {
   width: 100%;
-  &.fly-horizental {
+  border-width: 0 0px 1px;
+  border-style: solid;
+  @include border();
+  &.md-horizental {
     width: auto;
-    .fly-radio-wrap {
+    border-bottom: none;
+    .md-radio-wrap {
+      background: none;
+      height: auto;
       padding: 0 12px 8px 0;
     }
   }
-  .fly-radio-wrap {
+  .md-radio-wrap {
+    background-color: #ffffff;
     position: relative;
+    height: 56px;
+    padding: 0 16px;
     > input {
       z-index: 1;
       position: absolute;
@@ -146,24 +156,27 @@ export default {
       height: 100%;
       opacity: 0;
     }
-    .fly-radio-label {
+    .md-radio-label {
       margin-left: 8px;
       line-height: 20px;
-      color: rgba($color-MAIN, 1);
+      @include color('MAIN');
     }
-    .fly-radio-icon {
+    .md-radio-icon {
+      position: relative;
       width: 20px;
       height: 20px;
       line-height: 20px;
       font-size: 20px;
-      color: rgba($color-MAIN, 0.4);
-      border: 1px solid rgba($color-MAIN, 0.4);
+      @include color('MAIN', 0.4);
+      border-width: 1px;
+      border-style: solid;
+      @include border();
       border-radius: 50%;
       -webkit-transition-duration: 0.2s;
       transition-duration: 0.2s;
       -webkit-transition-property: color, border-color, background-color;
       transition-property: color, border-color, background-color;
-      &.fly-no-default {
+      &.md-no-default {
         border: 1px solid transparent;
         border-radius: none;
       }
@@ -176,41 +189,41 @@ export default {
         transition: all 0.2s;
       }
     }
-    &.fly-checked {
+    &.md-checked {
       cursor: not-allowed;
-      .fly-radio-icon {
+      .md-radio-icon {
         border: 1px solid transparent;
         i.default-icon {
-          color: rgba($color-PRIMARY, 1);
+          @include color('PRIMARY');
           transform: scale(1.1);
         }
       }
-      &.fly-disabled {
-        .fly-radio-icon {
+      &.md-disabled {
+        .md-radio-icon {
           i.default-icon {
-            color: $color-PRIMARY-DISABLED;
+            @include color('PRIMARY-DISABLED');
           }
         }
       }
     }
-    &.fly-disabled {
-      .fly-radio-label {
-        color: rgba($color-MAIN, 0.4);
+    &.md-disabled {
+      .md-radio-label {
+        @include color('MAIN', 0.4);
       }
-      .fly-radio-icon {
+      .md-radio-icon {
         i.default-icon {
           color: transparent;
         }
       }
     }
   }
-  &.fly-radio-left {
-    .fly-radio-label {
-      margin-left: 0px;
+  &.md-radio-left {
+    .md-radio-wrap {
     }
-    .fly-radio-icon {
+    .md-radio-label {
+      margin-left: 0px;
       position: absolute;
-      right: 0;
+      left: 16px;
     }
   }
 }

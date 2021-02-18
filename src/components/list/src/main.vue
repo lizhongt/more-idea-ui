@@ -1,12 +1,12 @@
 <template>
-  <ul class="fly-list">
+  <ul class="md-list">
     <slot></slot>
   </ul>
 </template>
 
 <script>
 export default {
-  name: 'FlyList',
+  name: 'MdList',
   components: {},
   props: {
     textline: {
@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fly-list {
+.md-list {
   background: #ffffff;
 }
 </style>

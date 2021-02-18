@@ -2,58 +2,73 @@
 import Button from './button'
 import Badge from './badge'
 import List from './list'
-import ListItem from './list/src/item'
-import SearchBar from './searchbar'
-import TabBar from './tabbar'
-import TabBarItem from './tabbar/src/item'
+import ListItem from './list-item'
+import Searchbar from './searchbar'
+import Tabbar from './tabbar'
+import TabbarItem from './tabbar-item'
+import Anchor from './anchor'
+import Tip from './tip'
+import Bar from './bar'
 
 // 表单
 import Checkbox from './checkbox'
-import Form from './form'
-import Input from './input'
+// import Form from './form'
+import Field from './field'
 import RadioGroup from './radio-group'
 import Radio from './radio'
 import Switch from './switch'
-import TextArea from './textarea'
 import Upload from './upload'
+import UploadFile from './upload-file'
+import UploadButton from './upload-button'
+import ImagePreivew from './image-preview'
 
 // 操作反馈
 import ActionSheet from './actionsheet'
 import Dialog from './dialog'
-import Tips from './tips'
 import Toast from './toast'
+import Picker from './picker'
 import Swiper from './swiper'
 import SwiperItem from './swiper-item'
+import Scroll from './scroll'
 
-const PlainApp = {
-  install(Vue) {
-    Vue.component(Button.name, Button)
-  }
-}
+// 业务组件
+import Calendar from '../bus/calendar'
 
 // 暴露给example文件夹使用
-export {
+export const components = {
   Button,
   Badge,
   List,
   ListItem,
-  SearchBar,
-  TabBar,
-  TabBarItem,
+  Searchbar,
+  Tabbar,
+  TabbarItem,
+  Anchor,
+  Bar,
   Checkbox,
-  Input,
+  Field,
   RadioGroup,
   Radio,
   Switch,
-  TextArea,
   Upload,
-  Form,
+  UploadFile,
+  UploadButton,
+  ImagePreivew,
+  // Form,
   ActionSheet,
   Dialog,
-  Tips,
+  Tip,
   Toast,
+  Picker,
   Swiper,
-  SwiperItem
+  SwiperItem,
+  Scroll,
+  Calendar
 }
 
-export default PlainApp
+export default function install(Vue) {
+  window.document.documentElement.setAttribute('data-theme', 'default')
+  Object.keys(components).forEach(item => {
+    components[item].install(Vue)
+  })
+}

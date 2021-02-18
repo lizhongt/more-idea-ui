@@ -1,13 +1,13 @@
 <template>
-  <div class="fly-checkbox-container" :class="computedContanierClass">
+  <div class="md-checkbox-container" :class="computedContanierClass">
     <label
-      class="fly-checkbox-wrap fb fb-cross-center"
+      class="md-checkbox-wrap fb fb-cross-center"
       :class="computedWrapClass"
     >
       <input type="checkbox" :disabled="disabled" v-model="checkValue" />
       <span
-        class="fly-checkbox-icon"
-        :class="{ 'fly-no-border': computedIconSlot }"
+        class="md-checkbox-icon"
+        :class="{ 'md-no-border': computedIconSlot }"
       >
         <slot name="icon"
           ><i
@@ -18,7 +18,7 @@
         ></slot>
       </span>
       <slot
-        ><span class="fly-checkbox-label" v-if="label">{{ label }} </span></slot
+        ><span class="md-checkbox-label" v-if="label">{{ label }} </span></slot
       >
     </label>
   </div>
@@ -26,7 +26,7 @@
 
 <script>
 export default {
-  name: 'FlyCheckbox',
+  name: 'MdCheckbox',
   components: {},
   props: {
     value: {
@@ -65,15 +65,15 @@ export default {
   computed: {
     computedContanierClass() {
       return [
-        this.position === 'left' ? `fly-checkbox-${this.position}` : '',
-        this.circle ? 'fly-checkbox-circle' : ''
+        this.position === 'left' ? `md-checkbox-${this.position}` : '',
+        this.circle ? 'md-checkbox-circle' : ''
       ]
     },
     computedWrapClass() {
       return {
-        'fly-checked': this.checkValue,
+        'md-checked': this.checkValue,
         'fb-main-between': this.position !== 'follow',
-        'fly-disabled': this.disabled
+        'md-disabled': this.disabled
       }
     },
     computedStyles() {
@@ -122,9 +122,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '~/assets/sass/flex.scss';
-.fly-checkbox-container {
+.md-checkbox-container {
   width: 100%;
-  .fly-checkbox-wrap {
+  padding: 0 16px;
+  .md-checkbox-wrap {
     position: relative;
     > input {
       z-index: 1;
@@ -135,24 +136,25 @@ export default {
       height: 100%;
       opacity: 0;
     }
-    .fly-checkbox-label {
+    .md-checkbox-label {
       margin-left: 8px;
       line-height: 20px;
-      color: rgba($color-MAIN, 1);
+      @include color('MAIN');
     }
-    .fly-checkbox-icon {
+    .md-checkbox-icon {
       width: 20px;
       height: 20px;
       line-height: 20px;
       font-size: 20px;
-      color: rgba($color-MAIN, 0.4);
-      border: 1px solid rgba($color-MAIN, 0.4);
+      border-width: 1px;
+      border-style: solid;
+      @include border();
       border-radius: 4px;
       -webkit-transition-duration: 0.2s;
       transition-duration: 0.2s;
       -webkit-transition-property: color, border-color, background-color;
       transition-property: color, border-color, background-color;
-      &.fly-no-border {
+      &.md-no-border {
         border: 1px solid transparent;
       }
       i.default-icon {
@@ -164,45 +166,45 @@ export default {
         transition: all 0.2s;
       }
     }
-    &.fly-checked {
+    &.md-checked {
       cursor: not-allowed;
-      .fly-checkbox-icon {
+      .md-checkbox-icon {
         border: 1px solid transparent;
         i.default-icon {
-          color: rgba($color-PRIMARY, 1);
+          @include color();
           transform: scale(1.1);
         }
       }
-      &.fly-disabled {
-        .fly-checkbox-icon {
+      &.md-disabled {
+        .md-checkbox-icon {
           i.default-icon {
-            color: $color-PRIMARY-DISABLED;
+            @include color('PRIMARY-DISABLED');
           }
         }
       }
     }
-    &.fly-disabled {
-      .fly-checkbox-label {
-        color: rgba($color-MAIN, 0.4);
+    &.md-disabled {
+      .md-checkbox-label {
+        @include color('MAIN', 0.4);
       }
-      .fly-checkbox-icon {
+      .md-checkbox-icon {
         i.default-icon {
           color: transparent;
         }
       }
     }
   }
-  &.fly-checkbox-left {
-    .fly-checkbox-label {
+  &.md-checkbox-left {
+    .md-checkbox-label {
       margin-left: 0px;
     }
-    .fly-checkbox-icon {
+    .md-checkbox-icon {
       position: absolute;
       right: 0;
     }
   }
-  &.fly-checkbox-circle {
-    .fly-checkbox-icon {
+  &.md-checkbox-circle {
+    .md-checkbox-icon {
       border-radius: 50%;
     }
   }

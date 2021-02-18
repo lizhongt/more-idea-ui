@@ -4,12 +4,18 @@
  * @Author: lizt
  * @Date: 2020-09-28 13:44:24
  * @LastEditors: lizt
- * @LastEditTime: 2020-10-09 11:21:07
+ * @LastEditTime: 2021-01-19 14:26:39
 -->
 <template>
-  <button href="javascript:" class="flyui-btn" :class="classNames">
+  <button
+    @click="clickHandler"
+    href="javascript:"
+    class="mdui-btn"
+    :class="classNames"
+  >
     <i
-      class="iconfont fly-ui--left flyui-btn_loading"
+      class="iconfont md-ui--left"
+      :class="{ 'mdui-btn_loading': loading }"
       v-if="(loading || icon) && type !== 'text'"
       v-html="loading ? '&#xe62b;' : icon"
     ></i
@@ -18,8 +24,9 @@
 </template>
 
 <script>
+import { throttle } from 'utils/comUtils.js'
 export default {
-  name: 'FlyButton',
+  name: 'MdButton',
   components: {},
   props: {
     // 按钮大小 large | medium | small | mini
@@ -53,6 +60,10 @@ export default {
     plain: {
       type: Boolean,
       default: false
+    },
+    throttle: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -63,14 +74,14 @@ export default {
       let _class = []
       if (this.type !== 'text') {
         _class = [
-          `flyui-btn_${this.type}`,
-          `flyui-btn--${this.size}`,
-          this.circle ? 'flyui-btn_circle' : '',
-          this.plain ? 'flyui-btn_plain' : '',
-          this.disabled ? 'flyui-btn_disabled' : ''
+          `mdui-btn_${this.type}`,
+          `mdui-btn--${this.size}`,
+          this.circle ? 'mdui-btn_circle' : '',
+          this.plain ? 'mdui-btn_plain' : '',
+          this.disabled ? 'mdui-btn_disabled' : ''
         ]
       } else {
-        _class = [`flyui-btn_text`, this.disabled ? 'flyui-btn_disabled' : '']
+        _class = [`mdui-btn_text`, this.disabled ? 'mdui-btn_disabled' : '']
       }
       return _class
     }
@@ -86,7 +97,18 @@ export default {
   deactivated() {},
   beforeDestroy() {},
   destroyed() {},
-  methods: {}
+  methods: {
+    clickHandler() {
+      if (this.throttle) {
+        throttle(this.clickEmitter, this.throttle)()
+      } else {
+        this.clickEmitter()
+      }
+    },
+    clickEmitter() {
+      this.$emit('click')
+    }
+  }
 }
 </script>
 
@@ -99,147 +121,182 @@ export default {
     -webkit-transform: rotate(360deg);
   }
 }
-.flyui-btn {
+@keyframes loading {
+  form {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+.mdui-btn {
   line-height: 1;
   display: block;
   text-align: center;
-  color: $color-DEFAULT;
+  @include color('DEFAULT');
   outline: none;
   border-radius: 6px;
   font-size: 16px;
-  &.flyui-btn--default,
-  &.flyui-btn--large {
+  &.mdui-btn--default,
+  &.mdui-btn--large {
     padding: 12px 24px;
     border-radius: 6px;
   }
-  &.flyui-btn--medium {
+  &.mdui-btn--medium {
     padding: 8px 16px;
     border-radius: 18px;
+    font-size: 14px;
   }
-  &.flyui-btn--small {
+  &.mdui-btn--small {
     padding: 5px 12px;
     border-radius: 14px;
+    font-size: 12px;
   }
-  &.flyui-btn_primary {
-    background-color: $color-PRIMARY;
-    border: 1px solid $color-BORDER;
+  &.mdui-btn--mini {
+    font-size: 10px;
+    transform: scale(0.875);
+    padding: 5px 6px;
+    border-radius: 14px;
+  }
+  &.mdui-btn_primary {
+    @include background();
+    border-style: solid;
+    border-width: 1px;
+    @include border();
     &:active {
-      background-color: $color-PRIMARY-TAP;
+      @include background('PRIMARY-TAP');
     }
-    &.flyui-btn_plain {
-      color: $color-PRIMARY;
-      border: 1px solid $color-PRIMARY;
-      background-color: $color-DEFAULT;
+    &.mdui-btn_plain {
+      @include color();
+      border-style: solid;
+      border-width: 1px;
+      @include border(1, 'PRIMARY');
+      @include background('DEFAULT');
       &:active {
-        color: $color-DEFAULT;
-        background-color: $color-PRIMARY-TAP;
+        @include color('DEFAULT');
+        @include background('PRIMARY-TAP');
       }
     }
-    &.flyui-btn_disabled {
-      background-color: $color-PRIMARY-DISABLED;
+    &.mdui-btn_disabled {
+      @include background('PRIMARY-DISABLED');
       cursor: not-allowed;
-      &.flyui-btn_plain {
-        color: rgba($color-PRIMARY, 0.4);
-        border: 1px solid rgba($color-PRIMARY, 0.4);
-        background-color: $color-DEFAULT;
+      &.mdui-btn_plain {
+        @include color('PRIMARY', 0.4);
+        border-style: solid;
+        border-width: 1px;
+        @include border(0.4, 'PRIMARY');
       }
     }
   }
-  &.flyui-btn_submary {
-    color: $color-MAIN;
-    background-color: $color-SUBMARY;
-    border: 1px solid $color-BORDER;
+  &.mdui-btn_submary {
+    @include color('MAIN');
+    border-style: solid;
+    border-width: 1px;
+    @include border();
+    @include background('SUBMARY');
     &:active {
-      background-color: $color-SUBMARY-TAP;
+      @include background('SUBMARY-TAP');
     }
-    &.flyui-btn_plain {
-      border: 1px solid rgba($color-MAIN, 0.28);
-      background-color: $color-SUBMARY;
+    &.mdui-btn_plain {
+      border-style: solid;
+      border-width: 1px;
+      @include border(0.28, 'MAIN');
+      @include background('SUBMARY');
       &:active {
-        color: $color-MAIN;
-        background-color: $color-SUBMARY-TAP;
+        @include color('MAIN');
+        @include background('SUBMARY-TAP');
       }
     }
-    &.flyui-btn_disabled {
-      background-color: $color-SUBMARY-DISABLED;
+    &.mdui-btn_disabled {
+      @include background('SUBMARY-DISABLED');
       cursor: not-allowed;
-      &.flyui-btn_plain {
-        color: $color-MAIN;
-        border: 1px solid rgba($color-MAIN, 0.28);
-        background-color: $color-SUBMARY-DISABLED;
+      &.mdui-btn_plain {
+        @include color('MAIN');
+        border-style: solid;
+        border-width: 1px;
+        @include border(0.28, 'MAIN');
       }
     }
   }
-  &.flyui-btn_default {
-    color: $color-MAIN;
-    background-color: $color-DEFAULT;
-    border: 1px solid $color-BORDER;
+  &.mdui-btn_default {
+    @include color('MAIN');
+    border-style: solid;
+    border-width: 1px;
+    @include border(0.28, 'MAIN');
+    @include background('DEFAULT');
     &:active {
-      background-color: $color-DEFAULT-TAP;
+      @include background('DEFAULT-TAP');
     }
-    &.flyui-btn_plain {
-      border: 1px solid rgba($color-MAIN, 0.08);
-      background-color: $color-DEFAULT;
+    &.mdui-btn_plain {
+      border-style: solid;
+      border-width: 1px;
+      @include border(0.28, 'MAIN');
+      @include background('DEFAULT');
       &:active {
-        border: 1px solid $color-BORDER;
-        background-color: $color-DEFAULT-TAP;
+        @include background('DEFAULT-TAP');
       }
     }
-    &.flyui-btn_disabled {
-      background-color: $color-DEFAULT-DISABLED;
+    &.mdui-btn_disabled {
+      @include background('DEFAULT-DISABLED');
       cursor: not-allowed;
-      &.flyui-btn_plain {
-        border: 1px solid $color-BORDER;
-        background-color: $color-DEFAULT-DISABLED;
+      &.mdui-btn_plain {
+        border-style: solid;
+        border-width: 1px;
+        @include border();
       }
     }
   }
-  &.flyui-btn_warning {
-    background-color: $color-WARNNING;
-    border: 1px solid $color-BORDER;
+  &.mdui-btn_warning {
+    @include background('WARNNING');
+    border-style: solid;
+    border-width: 1px;
+    @include border();
     &:active {
-      background-color: $color-WARNNING-TAP;
+      @include background('WARNNING-TAP');
     }
-    &.flyui-btn_plain {
-      color: $color-WARNNING;
-      border: 1px solid $color-WARNNING;
-      background-color: $color-DEFAULT;
+    &.mdui-btn_plain {
+      @include color('WARNNING');
+      border-style: solid;
+      border-width: 1px;
+      @include border();
+      @include background('DEFAULT');
       &:active {
-        color: $color-DEFAULT;
-        border: 1px solid $color-BORDER;
-        background-color: $color-WARNNING-TAP;
+        @include color('DEFAULT');
+        @include background('WARNNING-TAP');
       }
     }
-    &.flyui-btn_disabled {
-      background-color: $color-WARNNING-DISABLED;
+    &.mdui-btn_disabled {
+      @include background('WARNNING-DISABLED');
       cursor: not-allowed;
-      &.flyui-btn_plain {
-        color: $color-DEFAULT;
-        border: 1px solid $color-BORDER;
-        background-color: $color-WARNNING-DISABLED;
+      &.mdui-btn_plain {
+        @include color('DEFAULT');
+        border-style: solid;
+        border-width: 1px;
+        @include border();
       }
     }
   }
-  &.flyui-btn_text {
-    color: $color-PRIMARY;
+  &.mdui-btn_text {
+    @include color();
     border: none;
     padding: 12px 0px;
-    &.flyui-btn_disabled {
-      color: rgba($color-MAIN, 0.4);
+    background-color: inherit;
+    &.mdui-btn_disabled {
+      @include color('MAIN', 0.4);
       cursor: not-allowed;
     }
   }
-  .fly-ui--left {
+  .md-ui--left {
     display: inline-block;
     vertical-align: baseline;
     margin-right: 4px;
   }
-  .fly-ui--right {
+  .md-ui--right {
     display: inline-block;
     vertical-align: baseline;
     margin-left: 4px;
   }
-  .flyui-btn_loading {
+  .mdui-btn_loading {
     animation: loading 2s linear infinite;
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="fly-searchbar fb fb-col" :class="{ 'full-screen': value }">
+  <div class="md-searchbar fb fb-col" :class="{ 'full-screen': value }">
     <div class="search-con fb fb-main-start fb-cross-center">
       <div class="back-box" @click="handlerToBack" v-if="withBack"
         ><span class="iconfont">&#xe6c5;</span></div
@@ -21,7 +21,7 @@
       </div>
       <div class="search-tool" v-if="withButton">
         <slot name="button">
-          <span @click="handlerToClear">取消</span>
+          <span @click="handlerToCancel">取消</span>
         </slot>
       </div>
     </div>
@@ -33,7 +33,7 @@
 
 <script>
 export default {
-  name: 'FlySearchBar',
+  name: 'MdSearchbar',
   components: {},
   props: {
     value: {
@@ -84,6 +84,9 @@ export default {
     handlerBlur() {
       this.$emit('blur')
     },
+    handlerToCancel() {
+      this.$emit('cancel')
+    },
     handlerToClear() {
       this.currentValue = ''
       this.$refs.input.blur()
@@ -101,7 +104,7 @@ export default {
 <style lang="scss" scoped>
 @import '~/assets/sass/flex.scss';
 @import '~/assets/sass/icon.scss';
-.fly-searchbar {
+.md-searchbar {
   .search-con {
     height: 52px;
     min-height: 52px;
@@ -112,11 +115,11 @@ export default {
       height: 36px;
       padding: 13px;
       border-radius: 99999px;
-      background: rgba($color-THIRDMARY, 0.08);
+      @include background('THIRDMARY', 0.08);
       font-size: 15px;
       > i {
         margin-right: 10px;
-        color: rgba($color-MAIN, 0.56);
+        @include color('MAIN', 0.56);
         font-size: 14px;
       }
       > input {
@@ -126,7 +129,7 @@ export default {
         outline: none;
       }
       > span {
-        color: rgba($color-MAIN, 0.4);
+        @include color('MAIN', 0.4);
         margin-left: 10px;
       }
     }

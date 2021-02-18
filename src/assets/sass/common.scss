@@ -1,5 +1,3 @@
-@import './common_var.scss';
-
 // 字体比重
 $radius-list: (
   '2': 2,
@@ -46,10 +44,10 @@ $bold-list: (
 // 常用颜色定义
 // 使用：m-c-xxxx  ex：m-c-default
 $color-list: (
-  'FFFFFF': $color-DEFAULT,
-  '111F2C': $color-MAIN,
-  '191F25': $color-THIRDMARY,
-  '0089ff': $color-PRIMARY
+  'FFFFFF': #ffffff,
+  '111F2C': #111f2c,
+  '191F25': #191f25,
+  '0089ff': #0089ff
 );
 @each $name, $val in $color-list {
   .c-#{$name} {
@@ -90,15 +88,18 @@ $font-min-list: 0 8 12 14 16 20 22;
     .font-#{$font} {
       font-size: #{$font/2}px;
       -webkit-transform: scale(#{$font/24});
+      transform: scale(#{$font/24});
     }
     [data-dpr='2'] .font-#{$font} {
       font-size: #{$font}px;
       -webkit-transform: scale(#{$font/24});
+      transform: scale(#{$font/24});
     }
 
     [data-dpr='3'] .font-#{$font} {
       font-size: #{$font * 1.5}px;
       -webkit-transform: scale(#{$font/24});
+      transform: scale(#{$font/24});
     }
   }
 }
