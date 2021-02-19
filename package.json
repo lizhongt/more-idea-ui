@@ -1,7 +1,7 @@
 {
   "author": "leeztoy",
   "name": "more-idea-ui",
-  "version": "1.0.3",
+  "version": "1.0.2",
   "private": false,
   "files": [
     "examples",
@@ -11,6 +11,7 @@
   ],
   "main": "lib/index.js",
   "style": "lib/index.css",
+  "typings": "types/index.d.ts",
   "scripts": {
     "serve": "set BUILD=doc&& vue-cli-service serve",
     "document": "set BUILD=doc&& vue-cli-service build && scp -r dist/*  h5@192.168.4.61:/home/h5/webroot/mdComponent/h5",
@@ -45,6 +46,5 @@
     "prettier": "^1.19.1",
     "sass-loader": "^10.0.2",
     "vue-template-compiler": "^2.6.11"
-  },
-  "typings": "types/index.d.ts"
+  }
 }
