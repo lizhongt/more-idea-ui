@@ -15,6 +15,7 @@ export type FieldType =
   | 'choose'
   | 'password'
   | 'textarea'
+export type Align = 'horizontal' | 'vertical'
 
 /** Field Component */
 export interface MdField extends MdUIBaseComponent {
@@ -47,6 +48,9 @@ export interface MdField extends MdUIBaseComponent {
 
   /* textarea 的高度 */
   height: Number
+
+  /* 表单的对齐方式 */
+  align: Align
 }
 
 export const MdField: MdField

@@ -143,6 +143,10 @@ export default {
             {
               name: 'Calendar',
               path: '/calendar'
+            },
+            {
+              name: 'Cutter',
+              path: '/cutter'
             }
           ]
         }

@@ -45,6 +45,15 @@
         ></md-upload-button
       >
     </md-upload>
+    <md-list class="mt-12">
+      <md-list-item between>
+        <md-switch
+          label="开启图片裁剪"
+          v-model="editable"
+          position="left"
+        ></md-switch>
+      </md-list-item>
+    </md-list>
   </div>
 </template>
 
@@ -67,7 +76,8 @@ export default {
           name: 'apple-4.jpg',
           url: 'https://img.yzcdn.cn/vant/apple-4.jpg'
         }
-      ]
+      ],
+      editable: false
     }
   },
   computed: {
@@ -97,6 +107,9 @@ export default {
     },
     onSubmit(file) {
       console.log(file)
+      if (this.editable) {
+        // 开始裁剪图片
+      }
       // eslint-disable-next-line
       return new Promise((resolve, reject) => {
         // 把上传成功的url塞到files数组中

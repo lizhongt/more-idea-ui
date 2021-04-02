@@ -113,6 +113,11 @@ const routes = [
     path: '/calendar',
     name: 'Calendar',
     component: () => import('../views/bus/calendar.vue')
+  },
+  {
+    path: '/cutter',
+    name: 'Cutter',
+    component: () => import('../views/bus/cutter.vue')
   }
 ]
 

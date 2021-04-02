@@ -33,6 +33,7 @@ import Scroll from './scroll'
 
 // 业务组件
 import Calendar from '../bus/calendar'
+import Cutter from '../bus/cutter'
 
 // 暴露给example文件夹使用
 export const components = {
@@ -63,7 +64,8 @@ export const components = {
   Swiper,
   SwiperItem,
   Scroll,
-  Calendar
+  Calendar,
+  Cutter
 }
 
 export default function install(Vue) {

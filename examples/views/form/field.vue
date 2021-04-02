@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full h-full p-12-0">
+  <div class="w-full h-full">
     <div class="mb-12">
-      <p class="mb-12 p-0-16 c-191F25-40">单独使用</p>
+      <md-anchor text="单独使用"></md-anchor>
       <md-field
         v-model="value1"
         :clearable="clearable"
@@ -12,12 +12,20 @@
         :type="type"
         :width="width"
         :height="height"
+        :align="vertical ? 'vertical' : 'horizontal'"
       ></md-field>
     </div>
     <div class="mb-12">
-      <p class="mb-12 p-0-16 c-191F25-40">field类型</p>
+      <md-anchor text="field类型"></md-anchor>
       <md-radio-group v-model="type" :options="options" horizontal />
       <md-list>
+        <md-list-item between>
+          <md-switch
+            label="纵向对齐"
+            v-model="vertical"
+            position="left"
+          ></md-switch>
+        </md-list-item>
         <md-list-item between>
           <md-switch
             label="是否只读"
@@ -86,7 +94,8 @@ export default {
       required: false,
       maxlength: 10,
       width: 80,
-      height: 200
+      height: 200,
+      vertical: false
     }
   },
   computed: {},

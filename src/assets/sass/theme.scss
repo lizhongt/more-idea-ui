@@ -4,18 +4,19 @@ $themes: (
       MAIN: #111f2c,
     SUBMARY: #f2f4f5,
     THIRDMARY: #191f25,
-    PRIMARY: #0089ff,
+    PRIMARY: #006afe,
     DEFAULT: #ffffff,
-    WARNNING: #fb602d,
+    WARNNING: #ff9200,
     // 背景颜色
       DEFAULT-TAP: rgba(226, 228, 229, 1),
     DEFAULT-DISABLED: rgba(242, 244, 245, 1),
-    PRIMARY-TAP: rgba(2, 124, 229, 1),
-    PRIMARY-DISABLED: rgba(0, 137, 255, 0.4),
+    PRIMARY-TAP: rgba(#006afe, 0.48),
+    PRIMARY-DISABLED: rgba(#006afe, 0.12),
     SUBMARY-TAP: rgba(214, 218, 220, 1),
     SUBMARY-DISABLED: rgba(242, 244, 245, 1),
-    WARNNING-TAP: rgba(222, 88, 44, 1),
-    WARNNING-DISABLED: rgba(251, 96, 45, 0.4)
+    WARNNING-TAP: rgba(#ff9200, 0.48),
+    WARNNING-DISABLED: rgba(#ff9200, 0.12),
+    BORDER: rgba(#111f2c, 0.08)
   )
 );
 

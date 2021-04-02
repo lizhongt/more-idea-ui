@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full h-full p-12-0">
+  <div class="w-full h-full">
     <div class="mb-12">
-      <p class="mb-12 c-191F25-40 p-0-16">单独使用</p>
+      <md-anchor text="基本单独使用用法"></md-anchor>
       <md-checkbox v-model="checked" label="描述"></md-checkbox>
       <md-checkbox
         class="mt-12"
@@ -11,7 +11,7 @@
       ></md-checkbox>
     </div>
     <div class="mb-12">
-      <p class="mb-12 p-0-16 c-191F25-40">在list中使用</p>
+      <md-anchor text="在list中使用"></md-anchor>
       <md-list>
         <md-list-item>
           <md-checkbox

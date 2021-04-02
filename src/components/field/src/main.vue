@@ -1,12 +1,15 @@
 <template>
-  <div class="md-fielder">
+  <div class="md-fielder" :class="{ 'is-vertical': align === 'vertical' }">
     <div
       class="md-field-wrap"
-      :class="
+      :class="[
         type === 'textarea'
           ? 'is-textarea'
-          : 'fb fb-main-between fb-cross-center'
-      "
+          : align === 'horizontal'
+          ? 'fb fb-main-between fb-cross-center'
+          : '',
+        align === 'vertical' ? 'fb-col' : ''
+      ]"
     >
       <span class="md-required" v-if="required"
         ><i class="iconfont">&#xe6ff;</i></span
@@ -18,45 +21,47 @@
       >
         <span>{{ label }}</span>
       </div>
-      <div class="md-field-value item-flex-1" v-if="type === 'textarea'">
-        <textarea
-          :maxlength="`${maxlength}`"
-          :readonly="readOnly"
-          v-model="fieldValue"
-          :placeholder="placeholder"
-          :style="computedHeightStyle"
-        ></textarea>
-        <div class="text-indicator fb fb-main-between">
-          <span
-            :class="{ 'can-clear': fieldValue }"
-            class="md-clear"
-            @click="fieldValue = ''"
-            >清空</span
-          >
-          <span>{{ `${fieldValue.length}/${maxlength}` }}</span>
+      <slot>
+        <div class="md-field-value item-flex-1" v-if="type === 'textarea'">
+          <textarea
+            :maxlength="`${maxlength}`"
+            :readonly="readOnly"
+            v-model="fieldValue"
+            :placeholder="placeholder"
+            :style="computedHeightStyle"
+          ></textarea>
+          <div class="text-indicator fb fb-main-between">
+            <span
+              :class="{ 'can-clear': fieldValue }"
+              class="md-clear"
+              @click="fieldValue = ''"
+              >清空</span
+            >
+            <span>{{ `${fieldValue.length}/${maxlength}` }}</span>
+          </div>
         </div>
-      </div>
-      <div
-        class="md-field-value item-flex-1"
-        :class="{ 'md-field-choose': type === 'choose' }"
-        v-else
-      >
-        <input
-          :placeholder="placeholder"
-          :type="type === 'password' ? 'password' : 'text'"
-          :maxlength="`${maxlength}`"
-          :readonly="type === 'choose' ? true : readOnly"
-          :class="{ 'with-clear': clearable && type !== 'choose' }"
-          v-model="fieldValue"
-          @keydown="handleInput"
-        />
-        <span
-          @click="fieldValue = ''"
-          class="md-clearable"
-          v-if="clearable && type !== 'choose'"
-          ><i class="iconfont">&#xe6ce;</i></span
+        <div
+          class="md-field-value item-flex-1"
+          :class="{ 'md-field-choose': type === 'choose' }"
+          v-else
         >
-      </div>
+          <input
+            :placeholder="placeholder"
+            :type="type === 'password' ? 'password' : 'text'"
+            :maxlength="`${maxlength}`"
+            :readonly="type === 'choose' ? true : readOnly"
+            :class="{ 'with-clear': clearable && type !== 'choose' }"
+            v-model="fieldValue"
+            @keydown="handleInput"
+          />
+          <span
+            @click="fieldValue = ''"
+            class="md-clearable"
+            v-if="clearable && type !== 'choose'"
+            ><i class="iconfont">&#xe6ce;</i></span
+          >
+        </div>
+      </slot>
     </div>
   </div>
 </template>
@@ -115,6 +120,10 @@ export default {
     height: {
       type: Number,
       default: -1
+    },
+    align: {
+      type: String,
+      default: 'horizontal'
     }
   },
   data() {
@@ -178,6 +187,25 @@ export default {
 .md-fielder {
   background: #ffffff;
   width: 100%;
+  &.is-vertical {
+    .md-field-wrap {
+      min-height: 68px;
+      padding-top: 10px;
+      .md-field-value {
+        padding-top: 3px;
+        > input,
+        textarea {
+          text-align: left;
+        }
+      }
+      .md-field-title.is-textarea {
+        padding-top: 0;
+      }
+      .md-field-value > textarea {
+        padding-top: 3px;
+      }
+    }
+  }
   .md-field-wrap {
     min-height: 56px;
     padding: 0 16px;
@@ -196,6 +224,7 @@ export default {
       margin-right: 8px;
       position: absolute;
       left: 0px;
+      margin-top: 3px;
     }
     .md-field-title {
       min-width: 50px;

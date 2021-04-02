@@ -602,7 +602,7 @@ export default {
         &.matched {
           .selected {
             span {
-              background: rgba(0, 137, 255, 1);
+              background: rgba(0, 106, 254, 1);
               color: #fff;
             }
           }
