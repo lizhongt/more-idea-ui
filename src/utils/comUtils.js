@@ -475,3 +475,24 @@ export const throttle = (fn, wait = 600, immediate = true) => {
     }
   }
 }
+
+export function readFile(file, resultType) {
+  return new Promise(resolve => {
+    if (resultType === 'file') {
+      resolve(null)
+      return
+    }
+
+    const reader = new FileReader()
+
+    reader.onload = event => {
+      resolve(event.target.result)
+    }
+
+    if (resultType === 'dataUrl') {
+      reader.readAsDataURL(file)
+    } else if (resultType === 'text') {
+      reader.readAsText(file)
+    }
+  })
+}

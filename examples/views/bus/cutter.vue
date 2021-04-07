@@ -16,17 +16,19 @@
       :on-submit="onSubmit"
     ></md-upload>
     <md-anchor text="图片裁剪前"></md-anchor>
-    <div class="picture-view fb fb-center-center fb-main-center">
-      <span class="">请选择图片</span>
+    <div
+      class="picture-view fb fb-center-center fb-main-center"
+      :style="getOriginImg"
+    >
+      <span v-show="!originImg">请选择图片</span>
     </div>
     <md-anchor text="图片裁剪后"></md-anchor>
-    <div class="picture-view fb fb-center-center fb-main-center">
-      <span class="">请选择图片</span>
+    <div
+      class="picture-view fb fb-center-center fb-main-center"
+      :style="getCuttedImg"
+    >
+      <span v-show="!cuttedImg">请选择图片</span>
     </div>
-    <md-cutter
-      file="https://img.yzcdn.cn/vant/apple-2.jpg"
-      v-model="visible"
-    ></md-cutter>
   </div>
 </template>
 
@@ -37,19 +39,31 @@ export default {
   data() {
     return {
       files: [],
-      visible: false
+      originImg: null,
+      cuttedImg: null
     }
   },
-  computed: {},
+  computed: {
+    getOriginImg() {
+      return this.originImg
+        ? {
+            backgroundImage: `url(${this.originImg})`
+          }
+        : {}
+    },
+    getCuttedImg() {
+      return this.cuttedImg
+        ? {
+            backgroundImage: `url(${this.cuttedImg})`
+          }
+        : {}
+    }
+  },
   watch: {},
   beforeCreate() {},
   created() {},
   beforeMount() {},
-  mounted() {
-    setTimeout(() => {
-      this.visible = true
-    }, 500)
-  },
+  mounted() {},
   beforeUpdate() {},
   updated() {},
   activated() {},
@@ -57,7 +71,19 @@ export default {
   beforeDestroy() {},
   destroyed() {},
   methods: {
-    onSubmit() {}
+    onSubmit(files) {
+      let _that = this
+      this.originImg = files[0].content
+      let cutter = this.$Cutter({
+        file: files[0].content,
+        onCancel() {
+          cutter.hide()
+        },
+        onConfirm(resp) {
+          _that.cuttedImg = resp
+        }
+      }).show()
+    }
   }
 }
 </script>
@@ -68,5 +94,7 @@ export default {
   height: 200px;
   border: 1px solid #e6e6e6;
   margin-left: 16px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 </style>

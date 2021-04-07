@@ -19,13 +19,13 @@
       @change="changeHandler"
       :multiple="multiple"
       :accept="accept"
+      ref="file"
     />
   </div>
 </template>
 
 <script>
-// 详细参数https://blog.csdn.net/aGreetSmile/article/details/100030301
-// import lrz from 'lrz'
+import { readFile } from 'utils/comUtils.js'
 
 export default {
   name: 'MdUploadButton',
@@ -38,6 +38,13 @@ export default {
     multiple: {
       type: Boolean,
       default: false
+    },
+    resultType: {
+      type: String,
+      default: 'dataUrl',
+      validator(val) {
+        return ~['dataUrl', 'file', 'text'].indexOf(val)
+      }
     }
   },
   data() {
@@ -63,11 +70,36 @@ export default {
   destroyed() {},
   methods: {
     changeHandler(e) {
-      const fileEle = e.currentTarget
-      const files = fileEle.files
-      if (files) {
-        this.$parent.addFiles(files)
-        fileEle.value = null
+      let { files } = e.target
+      files = files.length === 1 ? files[0] : [].slice.call(files)
+      if (Array.isArray(files)) {
+        Promise.all(files.map(file => readFile(file, this.resultType))).then(
+          contents => {
+            const fileList = files.map((file, index) => {
+              const result = { file, status: '', message: '' }
+              if (contents[index]) {
+                result.content = contents[index]
+              }
+              return result
+            })
+            this.$parent.addFiles(fileList)
+            setTimeout(() => {
+              this.$refs.file.value = ''
+            }, 50)
+          }
+        )
+      } else {
+        readFile(files, this.resultType).then(content => {
+          const result = { file: files, status: '', message: '' }
+
+          if (content) {
+            result.content = content
+          }
+          this.$parent.addFiles([result])
+          setTimeout(() => {
+            this.$refs.file.value = ''
+          }, 50)
+        })
       }
     }
   }

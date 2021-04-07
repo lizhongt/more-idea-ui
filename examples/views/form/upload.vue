@@ -105,15 +105,18 @@ export default {
         resolve()
       })
     },
-    onSubmit(file) {
-      console.log(file)
+    onSubmit(files) {
+      console.log(files)
       if (this.editable) {
         // 开始裁剪图片
       }
       // eslint-disable-next-line
       return new Promise((resolve, reject) => {
         // 把上传成功的url塞到files数组中
-        this.files.push(this.files[0])
+        this.files.push({
+          name: files[0].file.name,
+          url: files[0].content
+        })
         // 以上可以进行上传逻辑
         this.$Toast({
           content: `文件上传成功`
@@ -182,7 +185,7 @@ export default {
     font-size: 12px;
     text-align: center;
     @include background('MAIN');
-    opacity: 0.56;
+    @include text-ellipsis;
   }
 }
 </style>
