@@ -22,7 +22,13 @@
         <span>{{ label }}</span>
       </div>
       <slot>
-        <div class="md-field-value item-flex-1" v-if="type === 'textarea'">
+        <div
+          class="md-field-value item-flex-1"
+          ref="textarea"
+          v-if="type === 'textarea'"
+          :class="{ 'md-textarea-auto-height ': !this.height }"
+        >
+          <pre v-if="!this.height"><span></span><br/></pre>
           <textarea
             :maxlength="`${maxlength}`"
             :readonly="readOnly"
@@ -30,7 +36,7 @@
             :placeholder="placeholder"
             :style="computedHeightStyle"
           ></textarea>
-          <div class="text-indicator fb fb-main-between">
+          <div class="text-indicator fb fb-main-between" v-if="clearable">
             <span
               :class="{ 'can-clear': fieldValue }"
               class="md-clear"
@@ -106,20 +112,20 @@ export default {
       default: '请输入文字'
     },
     maxlength: {
-      type: Number,
-      default: -1
+      type: [Number, String],
+      default: ''
     },
     required: {
       type: Boolean,
       default: false
     },
     width: {
-      type: Number,
-      default: -1
+      type: [Number, String],
+      default: ''
     },
     height: {
-      type: Number,
-      default: -1
+      type: [Number, String],
+      default: ''
     },
     align: {
       type: String,
@@ -132,11 +138,8 @@ export default {
     }
   },
   computed: {
-    computedShowInput() {
-      return ~['text', 'number', 'tel', 'password'].indexOf(this.type)
-    },
     computedStyle() {
-      if (this.width && this.computedShowInput) {
+      if (this.width) {
         return {
           width: `${this.width}px`
         }
@@ -155,6 +158,20 @@ export default {
   watch: {
     fieldValue(newVal) {
       this.$emit('input', newVal)
+    },
+    type() {
+      if (this.type === 'textarea' && !this.height) {
+        this.$nextTick(() => {
+          this.makeExpandingArea(this.$refs.textarea)
+        })
+      }
+    },
+    height() {
+      if (this.type === 'textarea' && !this.height) {
+        this.$nextTick(() => {
+          this.makeExpandingArea(this.$refs.textarea)
+        })
+      }
     }
   },
   beforeCreate() {},
@@ -176,6 +193,38 @@ export default {
           e.preventDefault()
         }
       }
+    },
+    makeExpandingArea(container) {
+      var area = container.getElementsByTagName('textarea')[0]
+      var span = container.getElementsByTagName('span')[0]
+      if (area.addEventListener) {
+        area.addEventListener(
+          'input',
+          function() {
+            span.textContent = area.value
+          },
+          false
+        )
+        span.textContent = area.value
+      } else if (area.attachEvent) {
+        area.attachEvent('onpropertychange', function() {
+          var html = area.value.replace(/n/g, '<br/>')
+          span.innerText = html
+        })
+        var html = area.value.replace(/n/g, '<br/>')
+        span.innerText = html
+      }
+      if (window.VBArray && window.addEventListener) {
+        //IE9
+        area.attachEvent('onkeydown', function() {
+          var key = window.event.keyCode
+          if (key == 8 || key == 46) span.textContent = area.value
+        })
+        area.attachEvent('oncut', function() {
+          span.textContent = area.value
+        }) //处理粘贴
+      }
+      container.className += 'active'
     }
   }
 }
@@ -191,25 +240,34 @@ export default {
     .md-field-wrap {
       min-height: 68px;
       padding-top: 10px;
+      .md-field-title {
+        font-size: 15px;
+      }
       .md-field-value {
         padding-top: 3px;
         > input,
         textarea {
           text-align: left;
         }
+        &.md-textarea-auto-height {
+          > pre,
+          textarea {
+            padding-top: 0;
+          }
+          > textarea {
+            padding-top: 3px;
+          }
+        }
       }
       .md-field-title.is-textarea {
         padding-top: 0;
-      }
-      .md-field-value > textarea {
-        padding-top: 3px;
       }
     }
   }
   .md-field-wrap {
     min-height: 56px;
     padding: 0 16px;
-    font-size: 16px;
+    font-size: 17px;
     position: relative;
     &.is-textarea {
       .md-required {
@@ -253,7 +311,7 @@ export default {
           color: rgba(0, 0, 0, 0.3);
           position: absolute;
           top: 50%;
-          font-size: 16px;
+          font-size: 17px;
           margin-top: -7px;
           right: 0;
         }
@@ -295,6 +353,28 @@ export default {
         @include color('MAIN', 0.4);
         .can-clear {
           @include color('PRIMARY');
+        }
+      }
+      &.md-textarea-auto-height {
+        position: relative;
+        background: #fff;
+        > textarea {
+          overflow: hidden;
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          resize: none;
+        }
+        > textarea,
+        pre {
+          margin: 0;
+          padding: 5px 0;
+          background: transparent;
+          font: 100 17px/24px Avenir, Helvetica, Arial, sans-serif;
+          white-space: pre-wrap;
+          word-wrap: break-word;
+          @include color('MAIN', 0.7);
         }
       }
     }

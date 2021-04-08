@@ -16,6 +16,7 @@
       @over-size="oversize"
       @file-click="fileClick"
       @file-delete="fileDelete"
+      accept="image/jpeg, image/jpg"
     ></md-upload>
     <md-upload
       v-model="files"

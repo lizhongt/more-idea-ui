@@ -41,13 +41,13 @@ export interface MdField extends MdUIBaseComponent {
   clearable: Boolean
 
   /*文字最大长度 */
-  maxlength: Number
+  maxlength: Number | String
 
   /* 左侧说明文字的宽度 */
-  width: Number
+  width: Number | String
 
   /* textarea 的高度 */
-  height: Number
+  height: Number | String
 
   /* 表单的对齐方式 */
   align: Align

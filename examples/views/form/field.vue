@@ -99,11 +99,7 @@ export default {
     }
   },
   computed: {},
-  watch: {
-    value1() {
-      console.log(this.value1)
-    }
-  },
+  watch: {},
   beforeCreate() {},
   created() {},
   beforeMount() {},

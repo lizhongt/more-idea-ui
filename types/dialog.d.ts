@@ -15,7 +15,7 @@ interface Prompt {
 
 type dialogType = 'alert' | 'confirm' | 'prompt'
 
-interface button {
+export interface button {
   type: String
   color: String
   text: String

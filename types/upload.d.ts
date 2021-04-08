@@ -14,6 +14,8 @@ interface valueType {
   [propName: string]: any
 }
 
+type resultType = 'dataUrl' | 'file' | 'text'
+
 export interface MdUpload extends MdUIBaseComponent {
   /** 绑定值 */
   value: Boolean
@@ -44,6 +46,9 @@ export interface MdUpload extends MdUIBaseComponent {
 
   /* 选择文件后触发的上传事件 */
   onSubmit: Function
+
+  /* 返回数据类型 */
+  resultType: resultType
 }
 
 export const MdUpload: MdUpload
