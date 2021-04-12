@@ -4,7 +4,7 @@
  * @Author: lizt
  * @Date: 2020-09-28 13:44:24
  * @LastEditors: lizt
- * @LastEditTime: 2021-01-19 14:26:39
+ * @LastEditTime: 2021-04-12 15:27:29
 -->
 <template>
   <button
@@ -136,7 +136,7 @@ export default {
   @include color('DEFAULT');
   outline: none;
   border-radius: 6px;
-  font-size: 16px;
+  font-size: 17px;
   &.mdui-btn--default,
   &.mdui-btn--large {
     padding: 12px 24px;
@@ -153,10 +153,10 @@ export default {
     font-size: 12px;
   }
   &.mdui-btn--mini {
-    font-size: 10px;
+    font-size: 12px;
     transform: scale(0.875);
     padding: 5px 6px;
-    border-radius: 14px;
+    border-radius: 10px;
   }
   &.mdui-btn_primary {
     @include background();

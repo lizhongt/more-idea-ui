@@ -49,6 +49,7 @@
         <div
           class="md-field-value item-flex-1"
           :class="{ 'md-field-choose': type === 'choose' }"
+          @click="chooseTrigger"
           v-else
         >
           <input
@@ -134,7 +135,7 @@ export default {
   },
   data() {
     return {
-      fieldValue: this.value
+      fieldValue: ''
     }
   },
   computed: {
@@ -156,6 +157,12 @@ export default {
     }
   },
   watch: {
+    value: {
+      immediate: true,
+      handler() {
+        this.fieldValue = this.value
+      }
+    },
     fieldValue(newVal) {
       this.$emit('input', newVal)
     },
@@ -225,6 +232,9 @@ export default {
         }) //处理粘贴
       }
       container.className += 'active'
+    },
+    chooseTrigger() {
+      this.type === 'choose' && this.$emit('click')
     }
   }
 }

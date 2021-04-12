@@ -144,7 +144,7 @@ export default function Swipe($container, options) {
         (config.horizontal
           ? data.direction === 'horizontal'
           : data.direction === 'vertical') &&
-        Math.abs(data.delta) > (config.resistance || data.size / 2)
+        Math.abs(data.delta) > (config.resistance || data.size / 3)
       if (isValidSwipe) {
         let offsetAbs = config.horizontal ? data.offsetX : data.offsetY
         utils.moveTo({
@@ -176,7 +176,6 @@ export default function Swipe($container, options) {
       }, 30)
     },
     resize: function() {
-      console.log(99)
       throttle(utils.setup)()
     },
     prev() {

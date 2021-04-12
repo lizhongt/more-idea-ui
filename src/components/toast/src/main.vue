@@ -73,8 +73,10 @@ export default {
             this.isVisible = false
           }, this.duration)
         }
+        this.$emit('show')
       } else {
         this.timer && clearTimeout(this.timer)
+        this.$emit('hide')
       }
     }
   },
@@ -91,17 +93,21 @@ export default {
 
 <style lang="scss">
 .md-toast-container {
-  max-width: 280px;
-  min-width: 120px;
-  min-height: 34px;
-  padding: 8px;
+  height: 120px;
+  width: 120px;
   background-color: rgba(17, 17, 17, 0.7);
   border-radius: 6px;
   text-align: center;
   overflow: auto;
   white-space: pre-wrap;
   color: #ffffff;
+  box-sizing: border-box;
+  padding: 12px;
   &.md-toast__text {
+    width: auto;
+    height: auto;
+    min-width: 88px;
+    padding: 12px 24px;
     .md-toast-wrapper {
       display: -webkit-box;
       display: -webkit-flex;
@@ -121,9 +127,6 @@ export default {
   &.md-toast__loading,
   &.md-toast__fail,
   &.md-toast__success {
-    min-width: 120px;
-    min-height: 120px;
-    max-width: 120px;
     .md-toast-wrapper {
       display: -webkit-box;
       display: -webkit-flex;
@@ -136,11 +139,10 @@ export default {
       justify-content: center;
       flex-direction: column;
       .iconfont {
-        font-size: 42px;
-        margin-right: 6px;
+        font-size: 48px;
       }
       .md-toast-content {
-        margin-top: 14px;
+        margin-top: 11px;
       }
     }
   }
@@ -195,8 +197,8 @@ export default {
     box-sizing: border-box;
   }
   .md-toast-content {
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 15px;
+    line-height: 21px;
     font-weight: 400;
     text-align: center;
   }

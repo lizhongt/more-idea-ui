@@ -172,6 +172,7 @@ export default {
   z-index: 99;
   @include border();
   .md-cutter-btn {
+    font-size: 18px;
     display: inline-block;
     width: 100%;
     @include color('DEFAULT');

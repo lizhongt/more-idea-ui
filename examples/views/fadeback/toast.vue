@@ -44,32 +44,35 @@ export default {
   methods: {
     text() {
       this.$Toast({
-        content: '节约时间'
+        content: '纯文本'
       }).show()
     },
     loading() {
       this.$Toast({
         type: 'loading',
-        content: '输入项目名称'
+        content: '加载中'
       }).show()
     },
     success() {
       this.$Toast({
         type: 'success',
-        content: '锄禾日当午汗滴禾下土'
+        content: '超长成功提示可能换行'
       }).show()
     },
     fail() {
       this.$Toast({
         type: 'fail',
-        content: '锄禾日当午汗滴禾下土'
+        content: '操作失败',
+        onHide() {
+          console.log('回调')
+        }
       }).show()
     },
     zdy() {
       this.$Toast(
         {
           type: 'success',
-          content: '锄禾日当午,汗滴禾下土,谁知盘中餐,粒粒皆辛苦'
+          content: '自定义图标'
         },
         createElement => {
           return [

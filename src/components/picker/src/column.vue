@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion:
+ * @version:
+ * @Author: lizt
+ * @Date: 2020-11-16 09:11:47
+ * @LastEditors: lizt
+ * @LastEditTime: 2021-04-12 17:10:42
+-->
 <template>
   <div class="md-picker-wrapper item-flex-1">
     <ul class="md-picker-column">
@@ -69,7 +77,7 @@ export default {
 <style lang="scss">
 .md-picker-wrapper {
   overflow: hidden;
-  font-size: 16px;
+  font-size: 17px;
   .md-picker-column {
     width: 100%;
     -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.68, 1);

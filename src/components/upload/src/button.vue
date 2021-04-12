@@ -4,7 +4,7 @@
  * @Author: lizt
  * @Date: 2020-11-05 14:43:16
  * @LastEditors: lizt
- * @LastEditTime: 2020-11-10 09:18:26
+ * @LastEditTime: 2021-04-12 15:35:31
 -->
 <template>
   <div class="md-upload-btn">
@@ -117,6 +117,7 @@ export default {
     margin: 0 8px 8px 0;
     background-color: #f7f8fa;
     font-size: 24px;
+    color: #c0c0c0;
   }
   .md-upload-input {
     position: absolute;

@@ -14,7 +14,11 @@
       :mask-closable="true"
       center
     >
-      <div class="md-image-preview" @click="isVisible = false">
+      <div
+        class="md-image-preview"
+        :style="previewStyle"
+        @click="isVisible = false"
+      >
         <div class="md-preview-wrap h-full fb fb-cross-center">
           <swiper
             v-if="showPreviewer"
@@ -33,7 +37,12 @@
           </swiper>
         </div>
         <div class="md-preview-indicator">
-          {{ `${position + 1} / ${images.length}` }}
+          <span
+            class="md-preview-bullet"
+            v-for="item in images.length"
+            :key="item"
+            :class="{ 'md-preview-bullet-active': item === position + 1 }"
+          ></span>
         </div>
       </div>
     </popup>
@@ -90,6 +99,11 @@ export default {
         // 横向
         horizontal: true
       }
+    },
+    previewStyle() {
+      return {
+        height: `${document.body.clientHeight}px`
+      }
     }
   },
   watch: {
@@ -100,9 +114,7 @@ export default {
   beforeCreate() {},
   created() {},
   beforeMount() {},
-  mounted() {
-    console.log(this.images)
-  },
+  mounted() {},
   beforeUpdate() {},
   updated() {},
   activated() {},
@@ -121,10 +133,9 @@ export default {
 @import '~/assets/sass/flex.scss';
 .md-image-preview {
   width: 100%;
-  height: 100vh;
   .md-preview-wrap {
     position: relative;
-    display: inline-block;
+    height: 100%;
     .preiview-image-item {
       width: 100%;
       height: 100%;
@@ -136,7 +147,7 @@ export default {
   }
   .md-preview-indicator {
     position: absolute;
-    top: 12px;
+    bottom: 12px;
     left: 50%;
     color: #fff;
     font-size: 14px;
@@ -144,6 +155,19 @@ export default {
     text-shadow: 0 1px 1px #323233;
     -webkit-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
+    .md-preview-bullet {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 5px;
+      background: #fff;
+      margin: 0 4px;
+      opacity: 0.8;
+      cursor: pointer;
+      &.md-preview-bullet-active {
+        @include background('PRIMARY');
+      }
+    }
   }
 }
 .fade-zoom-enter-active {

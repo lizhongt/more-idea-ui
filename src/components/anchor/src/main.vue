@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion:
+ * @version:
+ * @Author: lizt
+ * @Date: 2020-12-27 09:41:18
+ * @LastEditors: lizt
+ * @LastEditTime: 2021-04-09 14:32:23
+-->
 <template>
   <h2 class="md-anchor"
     ><slot>{{ text }}</slot></h2
@@ -29,6 +37,7 @@ export default {
   padding: 12px 16px;
   line-height: 1;
   font-size: 14px;
+  font-weight: normal;
   @include color('MAIN', 0.4);
 }
 </style>

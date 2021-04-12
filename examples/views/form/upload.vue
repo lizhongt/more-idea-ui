@@ -4,7 +4,7 @@
  * @Author: lizt
  * @Date: 2020-11-02 09:54:44
  * @LastEditors: lizt
- * @LastEditTime: 2020-11-11 09:55:34
+ * @LastEditTime: 2021-04-09 14:43:02
 -->
 <template>
   <div class="w-full h-full p-12-0">
@@ -14,27 +14,24 @@
       :before-delete="beforeDelete"
       :on-submit="onSubmit"
       @over-size="oversize"
-      @file-click="fileClick"
       @file-delete="fileDelete"
-      accept="image/jpeg, image/jpg"
+      @file-invalid="fileInvalid"
+      accept="image/png, image/jpg"
     ></md-upload>
-    <md-upload
-      v-model="files"
-      :on-submit="onSubmit2"
-      @over-size="oversize"
-      @file-click="fileClick"
-    >
+    <md-upload v-model="files2" :on-submit="onSubmit2" @over-size="oversize">
       <md-upload-file
-        v-for="(file, index) in files"
-        @click="fileClick(file, index)"
+        v-for="(file, index) in files2"
         :key="index"
         :file="file"
+        @click="fileClick(index)"
       >
         <div class="md-upload-preview" :style="computedFileStyle">
           <img :src="file.url" class="md-upload-image" />
         </div>
         <div class="md-upload-delete">
-          <i class="iconfont" @click.stop="fileDelete(file, index)">&#xe6f3;</i>
+          <i class="iconfont" @click.stop="fileDelete2(file, index)"
+            >&#xe6f3;</i
+          >
         </div>
         <div class="md-preview-cover">
           <div class="md-preivew-name">{{ file.name }}</div>
@@ -64,7 +61,8 @@ export default {
   props: {},
   data() {
     return {
-      files: [
+      files: [],
+      files2: [
         {
           name: 'tree.jpg',
           url: 'https://img.yzcdn.cn/vant/tree.jpg'
@@ -108,22 +106,49 @@ export default {
     },
     onSubmit(files) {
       console.log(files)
+      let _that = this
       if (this.editable) {
         // 开始裁剪图片
-      }
-      // eslint-disable-next-line
-      return new Promise((resolve, reject) => {
-        // 把上传成功的url塞到files数组中
-        this.files.push({
-          name: files[0].file.name,
-          url: files[0].content
-        })
-        // 以上可以进行上传逻辑
-        this.$Toast({
-          content: `文件上传成功`
+        let cutter = this.$Cutter({
+          file: files[0].content,
+          onCancel() {
+            cutter.hide()
+          },
+          onConfirm(resp) {
+            _that.files.push({
+              name: files[0].file.name,
+              url: resp
+            })
+          }
         }).show()
-        resolve()
-      })
+      } else {
+        // eslint-disable-next-line
+        return new Promise((resolve, reject) => {
+          // 把上传成功的url塞到files数组中
+          this.files.push({
+            name: files[0].file.name,
+            url: files[0].content
+          })
+          // 以上可以进行上传逻辑
+          this.$Toast({
+            content: `文件上传成功`
+          }).show()
+          resolve()
+        })
+      }
+    },
+    oversize(file) {
+      console.log(file)
+      this.$Toast({
+        content: `文件过大`
+      }).show()
+    },
+    fileDelete(file, index) {
+      console.log(file)
+      this.files2.splice(index, 1)
+      this.$Toast({
+        content: `已删除`
+      }).show()
     },
     onSubmit2(file) {
       console.log(file)
@@ -139,21 +164,15 @@ export default {
       // }).show()
       // return false
     },
-    oversize(file) {
+    fileDelete2(file, index) {
       console.log(file)
-      this.$Toast({
-        content: `文件过大`
-      }).show()
-    },
-    fileDelete(file, index) {
-      console.log(file)
-      this.files.splice(index, 1)
+      this.files2.splice(index, 1)
       this.$Toast({
         content: `已删除`
       }).show()
     },
-    fileClick(file, index) {
-      let urls = this.files.reduce((_list, file) => {
+    fileClick(index) {
+      let urls = this.files2.reduce((_list, file) => {
         return _list.concat(file.url)
       }, [])
       this.$ImagePreview({
@@ -162,6 +181,11 @@ export default {
           content: 'I am from a vue component',
           start: index
         }
+      }).show()
+    },
+    fileInvalid() {
+      this.$Toast({
+        content: '请上传 png , jpg 格式图片'
       }).show()
     }
   }

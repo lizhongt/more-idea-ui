@@ -13,6 +13,7 @@
         :width="width"
         :height="height"
         :align="vertical ? 'vertical' : 'horizontal'"
+        @click="chooseTrigger"
       ></md-field>
     </div>
     <div class="mb-12">
@@ -110,7 +111,13 @@ export default {
   deactivated() {},
   beforeDestroy() {},
   destroyed() {},
-  methods: {}
+  methods: {
+    chooseTrigger() {
+      this.$Toast({
+        content: `触发点击事件`
+      }).show()
+    }
+  }
 }
 </script>
 

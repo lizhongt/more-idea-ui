@@ -147,7 +147,7 @@ export default {
     border-width: 0 0px 1px 0;
     border-style: solid;
     @include border(0.12);
-    font-size: 14px;
+    font-size: 17px;
     position: relative;
     .cancel {
       @include color('PRIMARY', 1);
@@ -156,7 +156,6 @@ export default {
     .title {
       max-width: 50%;
       font-weight: 500;
-      font-size: 16px;
       text-align: center;
       overflow: hidden;
       text-overflow: ellipsis;

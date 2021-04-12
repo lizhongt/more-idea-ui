@@ -100,6 +100,18 @@ export default {
   destroyed() {},
   methods: {
     beforeUpload(files) {
+      // 文件格式不通过
+      if (
+        files.some(item =>
+          this.accept === 'image/*'
+            ? !~item.file.type.indexOf('image')
+            : !~this.accept.indexOf(item.file.type)
+        )
+      ) {
+        this.$emit('file-invalid', files)
+        return []
+      }
+
       let newFiles = []
       let fileIndex = 0
       let file = files[fileIndex]
@@ -117,6 +129,9 @@ export default {
     },
     addFiles(_files) {
       let files = this.beforeUpload(_files)
+      if (!files.length) {
+        return
+      }
       if (typeof this.onSubmit === 'function') {
         if (typeof this.onSubmit.then === 'function') {
           this.onSubmit(files)

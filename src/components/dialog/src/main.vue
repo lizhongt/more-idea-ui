@@ -183,7 +183,7 @@ export default {
     }
     .md-dialog-title {
       @include color('MAIN');
-      font-size: 18px;
+      font-size: 17px;
       line-height: 25px;
       text-align: center;
       overflow: hidden;
@@ -196,7 +196,7 @@ export default {
     .md-dialog-content {
       margin-top: 10px;
       text-align: center;
-      font-size: 15px;
+      font-size: 13px;
       line-height: 22px;
       min-height: 38px;
       @include color('MAIN', 0.56);
@@ -238,6 +238,7 @@ export default {
     width: 100%;
     border-width: 1px 0 0 0;
     border-style: solid;
+    font-size: 17px;
     @include border();
     .md-dialog-btn {
       display: inline-block;
@@ -262,6 +263,14 @@ export default {
       .md-dialog-btn {
         width: 50%;
       }
+    }
+  }
+  &.md-dialog__prompt {
+    .md-dialog-title {
+      font-size: 18px;
+    }
+    .md-dialog-content {
+      font-size: 15px;
     }
   }
 }
